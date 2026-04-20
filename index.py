@@ -7,3 +7,5 @@ def read_root():
     return {"mensagem": "Olá, mundo!"}
 
 #TesteWebhook
+
+print('Webhook recebido com sucesso!')
