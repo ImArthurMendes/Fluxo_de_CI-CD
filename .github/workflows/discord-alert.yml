@@ -1,0 +1,45 @@
+name: Discord Alert
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Enviar alerta ao Discord (sucesso)
+        if: success()
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          status: ${{ job.status }}
+          title: "✅ Build concluído com sucesso"
+          description: |
+            **Repositório:** ${{ github.repository }}
+            **Branch:** ${{ github.ref_name }}
+            **Commit:** ${{ github.sha }}
+            **Autor:** ${{ github.actor }}
+          color: 0x00ff00
+
+      - name: Enviar alerta ao Discord (falha)
+        if: failure()
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          title: "❌ Falha no build"
+          description: |
+            **Repositório:** ${{ github.repository }}
+            **Branch:** ${{ github.ref_name }}
+            **Commit:** ${{ github.sha }}
+            **Autor:** ${{ github.actor }}
+          color: 0xff0000
