@@ -20,9 +20,9 @@ jobs:
         if: success()
         uses: sarisia/actions-status-discord@v1
         with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          title: "✅ Build concluído com sucesso"
+          title: "Build concluído com sucesso"
           description: |
             **Repositório:** ${{ github.repository }}
             **Branch:** ${{ github.ref_name }}
@@ -36,7 +36,7 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          title: "❌ Falha no build"
+          title: "Falha no build"
           description: |
             **Repositório:** ${{ github.repository }}
             **Branch:** ${{ github.ref_name }}
